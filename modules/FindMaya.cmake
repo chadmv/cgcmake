@@ -54,14 +54,6 @@ set(MAYA_INSTALL_BASE_PATH ${MAYA_INSTALL_BASE_DEFAULT} CACHE STRING
 
 set(MAYA_LOCATION ${MAYA_INSTALL_BASE_PATH}/maya${MAYA_VERSION}${MAYA_INSTALL_BASE_SUFFIX})
 
-# Maya base directory
-find_path(MAYA_BASE_DIR "${MAYA_INC_SUFFIX}/maya/MFn.h"
-    PATHS
-        ${MAYA_LOCATION}
-        $ENV{MAYA_LOCATION}
-    DOC "Maya base path"
-)
-
 # Maya library directory
 find_path(MAYA_LIBRARY_DIR ${OPENMAYA}
     PATHS
@@ -94,7 +86,7 @@ endforeach()
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Maya DEFAULT_MSG MAYA_INCLUDE_DIR MAYA_LIBRARIES)
 
-function(MAYA_WRAP_CPP _target)
+function(MAYA_PLUGIN _target)
     if (WIN32)
         set_target_properties(${_target} PROPERTIES LINK_FLAGS ${MAYA_PLATFORM_LINK_FLAGS})
     endif()
