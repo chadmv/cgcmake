@@ -20,14 +20,14 @@ set(MAYA_INSTALL_BASE_SUFFIX "")
 set(MAYA_INC_SUFFIX "include")
 set(MAYA_LIB_SUFFIX "lib")
 set(MAYA_BIN_SUFFIX "bin")
-set(MAYA_PLATFORM_LINK_FLAGS)
+set(MAYA_TARGET_TYPE LIBRARY)
 if(WIN32)
     # Windows
     set(MAYA_INSTALL_BASE_DEFAULT "C:/Program Files/Autodesk")
     set(MAYA_COMPILE_DEFINITIONS "${MAYA_COMPILE_DEFINITIONS};NT_PLUGIN")
     set(OPENMAYA OpenMaya.lib)
-    set(MAYA_PLATFORM_LINK_FLAGS "/export:initializePlugin /export:uninitializePlugin")
     set(MAYA_PLUGIN_EXTENSION ".mll")
+    set(MAYA_TARGET_TYPE RUNTIME)
 elseif(APPLE)
     # Apple
     set(MAYA_INSTALL_BASE_DEFAULT /Applications/Autodesk)
@@ -88,7 +88,9 @@ find_package_handle_standard_args(Maya DEFAULT_MSG MAYA_INCLUDE_DIR MAYA_LIBRARI
 
 function(MAYA_PLUGIN _target)
     if (WIN32)
-        set_target_properties(${_target} PROPERTIES LINK_FLAGS ${MAYA_PLATFORM_LINK_FLAGS})
+        set_target_properties(${_target} PROPERTIES
+            LINK_FLAGS "/export:initializePlugin /export:uninitializePlugin"
+        )
     endif()
     set_target_properties(${_target} PROPERTIES
         COMPILE_DEFINITIONS "${MAYA_COMPILE_DEFINITIONS}"
