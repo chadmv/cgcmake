@@ -20,7 +20,7 @@ Maya CMakeLists.txt
     add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
     target_link_libraries(${PROJECT_NAME} ${MAYA_LIBRARIES})
 
-    MAYA_WRAP_CPP(${PROJECT_NAME})
+    MAYA_PLUGIN(${PROJECT_NAME})
 
 
 From Command Line
@@ -29,6 +29,3 @@ From Command Line
     cmake -G "Visual Studio 11 Win64" -DMAYA_VERSION=2015 ../
     cmake --build . --config Release
 
-    # CMake 3.x
-    cmake -G "Visual Studio 11 2012" -A x64 -DMAYA_VERSION=2015../
-    cmake --build . --config Release
