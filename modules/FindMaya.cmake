@@ -75,13 +75,19 @@ find_path(MAYA_INCLUDE_DIR maya/MFn.h
 )
 
 # Maya libraries
-set(_MAYA_LIBRARIES OpenMaya OpenMayaAnim OpenMayaFX OpenMayaRender OpenMayaUI Foundation)
+set(_MAYA_LIBRARIES OpenMaya OpenMayaAnim OpenMayaFX OpenMayaRender OpenMayaUI Foundation clew)
 foreach(MAYA_LIB ${_MAYA_LIBRARIES})
     find_library(MAYA_${MAYA_LIB}_LIBRARY NAMES ${MAYA_LIB} PATHS ${MAYA_LIBRARY_DIR}
         NO_DEFAULT_PATH)
-    set(MAYA_LIBRARIES ${MAYA_LIBRARIES} ${MAYA_${MAYA_LIB}_LIBRARY})
+    if (MAYA_${MAYA_LIB}_LIBRARY)
+        set(MAYA_LIBRARIES ${MAYA_LIBRARIES} ${MAYA_${MAYA_LIB}_LIBRARY})
+    endif()
 endforeach()
 
+if (APPLE AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
+    # Clang and Maya needs to use libstdc++
+    set(MAYA_CXX_FLAGS "-std=c++0x -stdlib=libstdc++")
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Maya DEFAULT_MSG MAYA_INCLUDE_DIR MAYA_LIBRARIES)
