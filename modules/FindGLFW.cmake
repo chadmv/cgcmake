@@ -17,7 +17,7 @@
 
 find_path(GLFW_INCLUDE_DIR
     NAMES
-        GLFW/glfw.h
+        GLFW/glfw3.h
     PATHS
         ${GLFW_LOCATION}/include
         $ENV{GLFW_LOCATION}/include
