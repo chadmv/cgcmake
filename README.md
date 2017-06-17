@@ -3,8 +3,8 @@ CMake modules for common applications related to computer graphics
 
 
 Maya CMakeLists.txt
-------------
-    cmake_minimum_required(VERSION 2.6)
+-------------------
+    cmake_minimum_required(VERSION 3.1)
     project(sampleplugin)
 
     set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/modules)
@@ -15,17 +15,15 @@ Maya CMakeLists.txt
 
     find_package(Maya REQUIRED)
 
-    include_directories(${MAYA_INCLUDE_DIR})
-    link_directories(${MAYA_LIBRARY_DIR})
-    add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
-    target_link_libraries(${PROJECT_NAME} ${MAYA_LIBRARIES})
-
-    MAYA_PLUGIN(${PROJECT_NAME})
+    add_library(sampleplugin SHARED ${SOURCE_FILES})
+    target_link_libraries(sampleplugin PRIVATE Maya::Maya)
+    target_include_directories(sampleplugin PRIVATE Maya::Maya)
+    MAYA_PLUGIN(sampleplugin)
 
 
 From Command Line
 -----------------
-    # CMake 2.8.x
-    cmake -G "Visual Studio 11 Win64" -DMAYA_VERSION=2015 ../
+    # CMake 3.x
+    cmake -G "Visual Studio 14 2015 Win64" -DMAYA_VERSION=2018 ../
     cmake --build . --config Release
 
