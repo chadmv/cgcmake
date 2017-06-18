@@ -113,12 +113,12 @@ if (NOT TARGET Maya::Maya)
         INTERFACE_INCLUDE_DIRECTORIES "${MAYA_INCLUDE_DIR}"
         IMPORTED_LOCATION "${MAYA_LIBRARY}")
 
-    set_property(TARGET Maya::Maya APPEND_STRING PROPERTY
-        INTERFACE_COMPILE_OPTIONS $<$<PLATFORM_ID:Linux>:" -fPIC">)
-    if (APPLE AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
-        # Clang and Maya needs to use libstdc++
-        set_property(TARGET Maya::Maya APPEND_STRING PROPERTY
-            INTERFACE_COMPILE_OPTIONS " -std=c++0x -stdlib=libstdc++")
+    set_property(TARGET Maya::Maya APPEND PROPERTY
+        INTERFACE_COMPILE_OPTIONS $<$<PLATFORM_ID:Linux>:"-fPIC">)
+    if (APPLE AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" AND MAYA_VERSION LESS 2017)
+        # Clang and Maya 2016 and older needs to use libstdc++
+        set_target_properties(Maya::Maya PROPERTIES
+            INTERFACE_COMPILE_OPTIONS "-std=c++0x;-stdlib=libstdc++")
     endif ()
 endif()
 
