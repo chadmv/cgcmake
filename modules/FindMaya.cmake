@@ -112,9 +112,7 @@ if (NOT TARGET Maya::Maya)
         INTERFACE_COMPILE_DEFINITIONS "${MAYA_COMPILE_DEFINITIONS}"
         INTERFACE_INCLUDE_DIRECTORIES "${MAYA_INCLUDE_DIR}"
         IMPORTED_LOCATION "${MAYA_LIBRARY}")
-
-    set_property(TARGET Maya::Maya APPEND PROPERTY
-        INTERFACE_COMPILE_OPTIONS $<$<PLATFORM_ID:Linux>:"-fPIC">)
+    
     if (APPLE AND ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" AND MAYA_VERSION LESS 2017)
         # Clang and Maya 2016 and older needs to use libstdc++
         set_target_properties(Maya::Maya PROPERTIES
