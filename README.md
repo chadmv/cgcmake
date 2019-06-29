@@ -1,6 +1,5 @@
-Improved version of Maya Cmake from https://github.com/chadmv/cgcmake.
-
-* Cmake configuration will now fail instead of silently picking a specific maya version if MAYA_VERSION is not specified
+# cgcmake
+CMake modules for common applications related to computer graphics.
 
 Example cmake files:
 

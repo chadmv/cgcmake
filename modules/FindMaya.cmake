@@ -144,8 +144,7 @@ foreach(MAYA_LIB ${_MAYA_LIBRARIES})
     endif()
 endforeach()
 
-function(ADD_MAYA_PLUGIN_ENTRY _target)
-    add_library(${_target} SHARED)
+function(MAYA_PLUGIN _target)
     if (WIN32)
         set_target_properties(${_target} PROPERTIES
             LINK_FLAGS "/export:initializePlugin /export:uninitializePlugin")
@@ -153,4 +152,10 @@ function(ADD_MAYA_PLUGIN_ENTRY _target)
     set_target_properties(${_target} PROPERTIES
         PREFIX ""
         SUFFIX ${MAYA_PLUGIN_EXTENSION})
+endfunction()
+
+# Maya plugin specific drop-in replacement for add_library command
+function(ADD_MAYA_PLUGIN_ENTRY _target)
+    add_library(${_target} SHARED)
+    MAYA_PLUGIN(${_target})
 endfunction()
