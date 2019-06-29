@@ -42,7 +42,7 @@
 #   All the Maya libraries.
 #
 
-# Set a default Maya version if not specified
+# Raise an error if Maya version if not specified
 if(NOT DEFINED MAYA_VERSION)
     message(FATAL_ERROR "MAYA_VERSION is not specified")
 endif()
