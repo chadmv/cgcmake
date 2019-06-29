@@ -44,7 +44,7 @@
 
 # Set a default Maya version if not specified
 if(NOT DEFINED MAYA_VERSION)
-    set(MAYA_VERSION 2017 CACHE STRING "Maya version")
+    message(FATAL_ERROR "MAYA_VERSION is not specified")
 endif()
 
 # OS Specific environment setup
@@ -144,7 +144,8 @@ foreach(MAYA_LIB ${_MAYA_LIBRARIES})
     endif()
 endforeach()
 
-function(MAYA_PLUGIN _target)
+function(ADD_MAYA_PLUGIN_ENTRY _target)
+    add_library(${_target} SHARED)
     if (WIN32)
         set_target_properties(${_target} PROPERTIES
             LINK_FLAGS "/export:initializePlugin /export:uninitializePlugin")
