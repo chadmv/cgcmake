@@ -1,9 +1,8 @@
 # cgcmake
 CMake modules for common applications related to computer graphics.
 
-Example cmake files:
-
-note: https://stackoverflow.com/questions/1027247/is-it-better-to-specify-source-files-with-glob-or-each-file-individually-in-cmak/1060061
+## Example
+-------------------
 
 Top level CMakeLists.txt
 -------------------
@@ -81,3 +80,6 @@ From Command Line
     cmake -G "Visual Studio 14 2015 Win64" -DMAYA_VERSION=2018 ../
     cmake --build . --config Release
 
+## note:
+-----------------
+https://stackoverflow.com/questions/1027247/is-it-better-to-specify-source-files-with-glob-or-each-file-individually-in-cmak/1060061
