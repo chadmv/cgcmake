@@ -12,6 +12,7 @@ Top level CMakeLists.txt
 
     project(MayaPlugin-Top C CXX)
 
+    # set this to whereever you placed FindMaya.cmake
     set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
     ## import Maya package
