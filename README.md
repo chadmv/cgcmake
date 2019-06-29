@@ -1,24 +1,79 @@
 Improved version of Maya Cmake from https://github.com/chadmv/cgcmake.
 
+* Cmake configuration will now fail instead of silently picking a specific maya version if MAYA_VERSION is not specified
 
-Maya CMakeLists.txt
+Example cmake files:
+
+note: https://stackoverflow.com/questions/1027247/is-it-better-to-specify-source-files-with-glob-or-each-file-individually-in-cmak/1060061
+
+Top level CMakeLists.txt
 -------------------
-    cmake_minimum_required(VERSION 3.1)
-    project(sampleplugin)
+    cmake_minimum_required(VERSION 3.14) # prefer newest version
 
-    set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/modules)
+    project(MayaPlugin-Top C CXX)
 
-    set(SOURCE_FILES "pluginMain.cpp"
-        "sampleCmd.cpp" "sampleCmd.h"
-    )
+    set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
+    ## import Maya package
     find_package(Maya REQUIRED)
 
-    add_library(sampleplugin SHARED ${SOURCE_FILES})
-    target_link_libraries(sampleplugin PRIVATE Maya::Maya)
-    target_include_directories(sampleplugin PRIVATE Maya::Maya)
-    MAYA_PLUGIN(sampleplugin)
+    add_subdirectory(example-hello-world-cmd)
+    add_subdirectory(plugin-main)
 
+example-hello-world-cmd CMakeLists.txt
+-------------------
+
+
+    ## Sample hello world command
+
+    project(HelloWorldCmd)
+
+    add_library(${PROJECT_NAME} STATIC)
+
+    target_include_directories(
+        ${PROJECT_NAME} 
+        PUBLIC 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+
+    target_sources(
+        ${PROJECT_NAME}
+        PRIVATE
+        src/MSimple.h
+        include/HelloworldCmd.h
+        src/HelloworldCmd.cpp
+    )
+
+    target_link_libraries(
+        ${PROJECT_NAME} 
+        PUBLIC 
+        Maya::Maya
+    )
+
+plugin-main CMakeLists.txt
+-------------------
+
+    ## Maya plugin entry
+
+    project(SamplePlugins)
+
+    # Maya plugin specific drop-in replacement for add_library command
+    ADD_MAYA_PLUGIN_ENTRY(${PROJECT_NAME})
+
+    target_sources(
+        ${PROJECT_NAME}
+        PRIVATE
+        src/main.cpp
+    )
+
+    target_link_libraries(
+        ${PROJECT_NAME}
+        PRIVATE 
+        HelloWorldCmd
+    )
+
+    # Uncomment this to enable installing to CMAKE_INSTALL_PREFIX.
+    # install(TARGETS ${PROJECT_NAME} ${MAYA_TARGET_TYPE} DESTINATION .)
 
 From Command Line
 -----------------
