@@ -1,5 +1,4 @@
-# cgcmake
-CMake modules for common applications related to computer graphics
+Improved version of Maya Cmake from https://github.com/chadmv/cgcmake.
 
 
 Maya CMakeLists.txt
