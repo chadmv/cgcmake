@@ -1,0 +1,6 @@
+[submodule "ucm"]
+	path = ucm
+	url = https://github.com/onqtam/ucm.git
+[submodule "mmce"]
+	path = mmce
+	url = https://github.com/UNDEFINED-BEHAVIOR/mmce.git
