@@ -1,3 +1,5 @@
+Originally forked from https://github.com/chadmv/cgcmake
+
 # cgcmake
 CMake modules for common applications related to computer graphics.
 

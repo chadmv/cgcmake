@@ -43,8 +43,12 @@
 #
 
 # Raise an error if Maya version if not specified
-if(NOT DEFINED MAYA_VERSION)
-    message(FATAL_ERROR "MAYA_VERSION is not specified")
+if (NOT MAYA_VERSION)
+    set(MAYA_VERSION "VARIABLE_NOT_SET" CACHE STRING "" FORCE)
+endif()
+
+if(MAYA_VERSION STREQUAL "VARIABLE_NOT_SET")
+    message(FATAL_ERROR "MAYA_VERSION variable is not specified")
 endif()
 
 # OS Specific environment setup
