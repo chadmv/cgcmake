@@ -43,9 +43,14 @@
 #
 
 # Raise an error if Maya version if not specified
-if(NOT DEFINED MAYA_VERSION)
-    message(FATAL_ERROR "MAYA_VERSION is not specified")
-endif()
+# Default value will be "NOT_SET"
+IF(NOT DEFINED MAYA_VERSION)
+    SET(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
+ENDIF()
+
+IF(MAYA_VERSION STREQUAL "NOT_SET")
+    MESSAGE(FATAL_ERROR "MAYA_VERSION is not specified")
+ENDIF()
 
 # OS Specific environment setup
 set(MAYA_COMPILE_DEFINITIONS "REQUIRE_IOSTREAM;_BOOL")
