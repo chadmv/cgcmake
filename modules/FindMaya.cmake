@@ -158,7 +158,10 @@ function(MAYA_PLUGIN _target)
 endfunction()
 
 # Maya plugin specific drop-in replacement for add_library command
-function(ADD_MAYA_PLUGIN_ENTRY _target)
+function(ADD_MAYA_PLUGIN _target)
     add_library(${_target} SHARED)
+    target_link_libraries(
+        ${_target} PRIVATE Maya::Maya
+    )
     MAYA_PLUGIN(${_target})
 endfunction()
