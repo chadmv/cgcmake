@@ -59,7 +59,7 @@ plugin-main CMakeLists.txt
     project(SamplePlugins)
 
     # Maya plugin specific drop-in replacement for add_library command
-    ADD_MAYA_PLUGIN_ENTRY(${PROJECT_NAME})
+    ADD_MAYA_PLUGIN(${PROJECT_NAME})
 
     target_sources(
         ${PROJECT_NAME}
