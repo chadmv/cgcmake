@@ -44,9 +44,7 @@
 
 # Raise an error if Maya version if not specified
 # Default value will be "NOT_SET"
-IF(NOT DEFINED MAYA_VERSION)
-    SET(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
-ENDIF()
+SET(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
 
 IF(MAYA_VERSION STREQUAL "NOT_SET")
     MESSAGE(FATAL_ERROR "MAYA_VERSION is not specified")
