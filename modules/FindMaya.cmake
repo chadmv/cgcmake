@@ -111,6 +111,11 @@ mark_as_advanced(MAYA_INCLUDE_DIR MAYA_LIBRARY)
 
 if (NOT TARGET Maya::Maya)
     add_library(Maya::Maya UNKNOWN IMPORTED)
+    target_include_directories(
+        Maya::Maya
+        INTERFACE
+        ${MAYA_INCLUDE_DIR}
+    )
     set_target_properties(Maya::Maya PROPERTIES
         INTERFACE_COMPILE_DEFINITIONS "${MAYA_COMPILE_DEFINITIONS}"
         INTERFACE_INCLUDE_DIRECTORIES "${MAYA_INCLUDE_DIR}"
