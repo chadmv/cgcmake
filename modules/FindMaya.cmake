@@ -42,9 +42,14 @@
 #   All the Maya libraries.
 #
 
-# Set a default Maya version if not specified
+# Raise an error, halt if Maya version if not specified
+# Default value will be "NOT_SET"
 if(NOT DEFINED MAYA_VERSION)
-    set(MAYA_VERSION 2017 CACHE STRING "Maya version")
+    set(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
+endif()
+
+if(MAYA_VERSION STREQUAL "NOT_SET")
+    message(FATAL_ERROR "FindMaya: MAYA_VERSION is not specified")
 endif()
 
 # OS Specific environment setup
@@ -152,4 +157,14 @@ function(MAYA_PLUGIN _target)
     set_target_properties(${_target} PROPERTIES
         PREFIX ""
         SUFFIX ${MAYA_PLUGIN_EXTENSION})
+endfunction()
+
+# Declare, format and link target as maya plugin in one command
+# Drop-in replacement for add_library
+function(ADD_MAYA_PLUGIN _target)
+    add_library(${_target} SHARED)
+    target_link_libraries(
+        ${_target} PRIVATE Maya::Maya
+    )
+    MAYA_PLUGIN(${_target})
 endfunction()
