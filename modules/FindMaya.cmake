@@ -46,9 +46,7 @@ include(CMakeParseArguments)
 
 # Raise an error, halt if Maya version if not specified
 # Default value will be "NOT_SET"
-if(NOT DEFINED MAYA_VERSION)
-    set(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
-endif()
+set(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
 
 if(MAYA_VERSION STREQUAL "NOT_SET")
     message(FATAL_ERROR "FindMaya: MAYA_VERSION is not specified")
