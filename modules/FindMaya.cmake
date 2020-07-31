@@ -42,11 +42,11 @@
 #   All the Maya libraries.
 #
 
+include(CMakeParseArguments)
+
 # Raise an error, halt if Maya version if not specified
 # Default value will be "NOT_SET"
-if(NOT DEFINED MAYA_VERSION)
-    set(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
-endif()
+set(MAYA_VERSION "NOT_SET" CACHE STRING "Target Maya version")
 
 if(MAYA_VERSION STREQUAL "NOT_SET")
     message(FATAL_ERROR "FindMaya: MAYA_VERSION is not specified")
@@ -161,10 +161,24 @@ endfunction()
 
 # Declare, format and link target as maya plugin in one command
 # Drop-in replacement for add_library
-function(ADD_MAYA_PLUGIN _target)
-    add_library(${_target} SHARED)
-    target_link_libraries(
-        ${_target} PRIVATE Maya::Maya
+function(ADD_MAYA_PLUGIN _TARGET)
+    cmake_parse_arguments(
+        _PARSED
+        "EXCLUDE_FROM_ALL"
+        ""
+        ""
+        ${ARGN}
     )
-    MAYA_PLUGIN(${_target})
+    set(_SOURCES ${_PARSED_UNPARSED_ARGUMENTS})
+
+    if(_PARSED_EXCLUDE_FROM_ALL)
+        add_library(${_TARGET} SHARED EXCLUDE_FROM_ALL ${_SOURCES})
+    else()
+        add_library(${_TARGET} SHARED ${_SOURCES})
+    endif()
+
+    target_link_libraries(
+        ${_TARGET} PRIVATE Maya::Maya
+    )
+    MAYA_PLUGIN(${_TARGET})
 endfunction()
