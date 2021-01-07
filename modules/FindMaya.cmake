@@ -86,6 +86,7 @@ find_path(MAYA_INCLUDE_DIR maya/MFn.h
     PATH_SUFFIXES
         "include/"
         "devkit/include/"
+    NO_DEFAULT_PATH
 )
 
 find_library(MAYA_LIBRARY
